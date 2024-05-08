@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、组合查询12UNION和UNION ALL的区别是,union会自动压缩多个结果集合中的重复结果，而union all则将所有的结果全部显示出来，不管是不是重复。前提条件:两张表列的数量要一致  12345678910111213141516create table student1(	s_id varchar(10) primary key,	name varchar(20));insert">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、组合查询12UNION和UNION ALL的区别是,union会自动压缩多个结果集合中的重复结果，而union all则将所有的结果全部显示出来，不管是不是重复。前提条件:两张表列的数量要一致  12345678910111213141516create table student1(	s_id varchar(10) primary key,	name varchar(20));insert">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20210304170051.png">
+<meta property="og:image" content="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20211022103751.png">
+<meta property="og:image" content="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20210304084728.png">
+<meta property="article:published_time" content="2024-05-08T09:39:33.828Z">
+<meta property="article:modified_time" content="2024-03-20T05:47:19.718Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20210304170051.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-MYSQL高级进阶文档" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" class="article-date">
+  <time class="dt-published" datetime="2024-05-08T09:39:33.828Z" itemprop="datePublished">2024-05-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、组合查询"><a href="#一、组合查询" class="headerlink" title="一、组合查询"></a>一、组合查询</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UNION和UNION ALL的区别是,union会自动压缩多个结果集合中的重复结果，而union all则将所有的结果全部显示出来，不管是不是重复。</span><br><span class="line">前提条件:两张表列的数量要一致</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> student1(</span><br><span class="line">	s_id <span class="type">varchar</span>(<span class="number">10</span>) <span class="keyword">primary</span> key,</span><br><span class="line">	name <span class="type">varchar</span>(<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student1 <span class="keyword">values</span></span><br><span class="line">(<span class="string">&#x27;001&#x27;</span>,<span class="string">&#x27;范娜&#x27;</span>),(<span class="string">&#x27;002&#x27;</span>,<span class="string">&#x27;张三星&#x27;</span>),(<span class="string">&#x27;003&#x27;</span>,<span class="string">&#x27;李四海&#x27;</span>),(<span class="string">&#x27;004&#x27;</span>,<span class="string">&#x27;刘德华&#x27;</span>),(<span class="string">&#x27;005&#x27;</span>,<span class="string">&#x27;周润发&#x27;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> student2(</span><br><span class="line">	s_id <span class="type">varchar</span>(<span class="number">10</span>) <span class="keyword">primary</span> key,</span><br><span class="line">	name <span class="type">varchar</span>(<span class="number">20</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student2 <span class="keyword">values</span></span><br><span class="line">(<span class="string">&#x27;001&#x27;</span>,<span class="string">&#x27;范娜&#x27;</span>),(<span class="string">&#x27;006&#x27;</span>,<span class="string">&#x27;张学友&#x27;</span>),(<span class="string">&#x27;007&#x27;</span>,<span class="string">&#x27;喜羊羊&#x27;</span>),(<span class="string">&#x27;008&#x27;</span>,<span class="string">&#x27;灰太狼&#x27;</span>),(<span class="string">&#x27;005&#x27;</span>,<span class="string">&#x27;阿童木&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二、视图"><a href="#二、视图" class="headerlink" title="二、视图"></a>二、视图</h2><pre><code>    视图是一张虚拟表,是一个查询结果集  其结构和数据是建立在对表的查询基础上 视图中不存放数据。数据存放在视图所引用的原始表中 一个原始表，根据不同用户的不同需求，可以创建不同的视图。
+</code></pre>
+<p><font color=red>创建视图的作用是方便查询，视图一般不用做更新数据</font></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 视图看作一张虚拟的表,保存的是查询语句,视图不保存数据</span></span><br><span class="line"><span class="comment">-- 视图的作用是为了简化查询sql</span></span><br><span class="line">语法:</span><br><span class="line">  #创建视图语法</span><br><span class="line">	<span class="keyword">CREATE</span> <span class="keyword">VIEW</span> 视图名  <span class="keyword">AS</span>  (<span class="operator">&lt;</span><span class="keyword">SELECT</span> 语句<span class="operator">&gt;</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">-- 创建视图</span></span><br><span class="line">	<span class="keyword">create</span> <span class="keyword">view</span> my_view <span class="keyword">as</span> 	<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> stu <span class="keyword">where</span> sid <span class="keyword">in</span>(<span class="keyword">select</span> sid <span class="keyword">from</span> sc <span class="keyword">where</span> cid<span class="operator">=</span>(<span class="keyword">select</span> cid <span class="keyword">from</span> course <span class="keyword">where</span> cname<span class="operator">=</span><span class="string">&#x27;语文&#x27;</span>) <span class="keyword">and</span> score<span class="operator">&gt;=</span><span class="number">60</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">-- 查询视图</span></span><br><span class="line">	<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> my_view;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">-- 删除视图</span></span><br><span class="line">	<span class="keyword">drop</span> <span class="keyword">view</span> my_view;</span><br><span class="line">	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="五、索引"><a href="#五、索引" class="headerlink" title="五、索引"></a>五、索引</h2><h3 id="1、索引简介"><a href="#1、索引简介" class="headerlink" title="1、索引简介"></a>1、索引简介</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">索引的建立可以极大的提高数据库的检索速度</span><br><span class="line">索引的创建比较耗时,并且索引会占用计算机的存储空间</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、索引分类"><a href="#2、索引分类" class="headerlink" title="2、索引分类"></a>2、索引分类</h3><h4 id="a、普通索引"><a href="#a、普通索引" class="headerlink" title="a、普通索引"></a>a、普通索引</h4><pre><code>    普通索引是最基本的索引，它没有任何限制，允许在定义索引的列中插入重复值和空值
+</code></pre>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">FROM</span> `village`;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> village;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> village <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;银闸社区居委会&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 索引</span></span><br><span class="line"><span class="comment">-- 作用:索引的建立可以极大的提高数据库的查询速度</span></span><br><span class="line"><span class="comment">-- 了解:索引在创建的时候比较耗时,并且创建索引也会占用存储空间</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 索引的分类</span></span><br><span class="line">	<span class="comment">-- 普通索引</span></span><br><span class="line">	<span class="comment">-- 主键索引</span></span><br><span class="line">		<span class="comment">-- 主键自带索引</span></span><br><span class="line">	<span class="comment">-- 唯一索引</span></span><br><span class="line">	<span class="comment">-- 组合索引</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 索引的用法:在查询的时候以有索引的列为条件进行查询,可以提高查询效率</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 普通索引的语法</span></span><br><span class="line">	<span class="comment">-- 创建索引 create index 索引名称 on 表名(列名)</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">-- 查看表中的索引 SHOW INDEX FROM 表名</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">-- 删除索引 drop index 索引名 on 表名</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">-- 查询索引</span></span><br><span class="line"><span class="keyword">show</span> index <span class="keyword">from</span> village;</span><br><span class="line"><span class="comment">-- 创建索引</span></span><br><span class="line"><span class="keyword">create</span> index name_index <span class="keyword">on</span> village(name);</span><br><span class="line"><span class="comment">-- 删除索引</span></span><br><span class="line"><span class="keyword">drop</span> index name_index <span class="keyword">on</span> village;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 当我们以具有索引的列进行条件查询时,可以提高查询效率</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> village <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;银闸社区居委会&#x27;</span> <span class="keyword">and</span> streetCode<span class="operator">=</span><span class="string">&#x27;110101001&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 索引失效</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> village <span class="keyword">where</span> streetCode<span class="operator">=</span><span class="string">&#x27;110101001&#x27;</span>;	</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 索引失效</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> village <span class="keyword">where</span> name <span class="keyword">like</span> <span class="string">&#x27;%社区居&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 主键自带索引,当我们以主键进行条件查询时,速度也非常快.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 如果表的数据量非常大,怎么提高查询效率</span></span><br><span class="line">	<span class="comment">-- 给频繁查询的列创建索引</span></span><br><span class="line"><span class="comment">-- 索引在什么时候失效</span></span><br><span class="line">	<span class="comment">-- 1.以or进行多条件查询时</span></span><br><span class="line">	<span class="comment">-- 2.使用like进行模糊查询%在前面时</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="b、唯一索引"><a href="#b、唯一索引" class="headerlink" title="b、唯一索引"></a>b、唯一索引</h4><pre><code>    索引列的值必须唯一，允许有空值，如果是组合索引，列值的组合必须唯一
+</code></pre>
+<h4 id="c、主键索引"><a href="#c、主键索引" class="headerlink" title="c、主键索引"></a>c、主键索引</h4><pre><code>主键索引是一种特殊的唯一索引，一个表只能有一个主键，不允许有空值，一般是在创建表的时候指定主键，主键默认就是主键索引
+</code></pre>
+<h4 id="d、组合索引"><a href="#d、组合索引" class="headerlink" title="d、组合索引"></a>d、组合索引</h4><pre><code>多个字段上创建的索引，只有在查询条件中使用了创建索引时的第一个字段，索引才会被使用
+</code></pre>
+<h2 id="六、事务"><a href="#六、事务" class="headerlink" title="六、事务"></a>六、事务</h2><p>事务又叫做TCL，全称是transaction control language，意思是事务控制语言。</p>
+<p><font color='red'><strong>事务的定义</strong>：组成一个业务的多条sql语句要么全部执行成功，要么全部执行失败，这就是事务</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">事务的特性:</span><br><span class="line"> 	原子性Atomicity：原子性指的是事务是一个不可分割的，看作一个整体。</span><br><span class="line">	一致性Consistency：组成事物的多个sql语句要么全部执行成功,要么全部执行失败.</span><br><span class="line">	隔离性Isolation：指的是一个事务的执行，不能被其他的事务所干扰。</span><br><span class="line">	持久性Durability：事物对数据库的改变就是永久的。</span><br></pre></td></tr></table></figure>
+
+<p><font color=red>提示：mysql中默认是自动提交事务，如果要自己控制事务需要关闭mysql的自动提交事务</font></p>
+<p><font color=red>打开自动提交事务：SET AUTOCOMMIT&#x3D;1</font></p>
+<p><font color=red>关闭自动提交事务：SET AUTOCOMMIT&#x3D;0</font></p>
+<p><font color=blue>案例：使用事务完成转帐操作。</font></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 事物</span></span><br><span class="line"><span class="comment">-- 一个业务中的一组sql语句,要么全部执行成功,要么全部执行失败</span></span><br><span class="line"><span class="comment">-- 事物的特性:</span></span><br><span class="line">	<span class="comment">-- 原子性:组成一个事物的多条sql语句看作一个整体,不可分割</span></span><br><span class="line">	<span class="comment">-- 一致性:组成一个事物的多条sql语句要么全部成功,要么全部失败</span></span><br><span class="line">	<span class="comment">-- 隔离性:事物跟事物之间相互隔离,互不影响</span></span><br><span class="line">	<span class="comment">-- 持久性:数据的改变一定时永久的</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">-- 事物编程</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> bank(</span><br><span class="line">	id <span class="type">int</span> <span class="keyword">primary</span> key auto_increment,</span><br><span class="line">	account <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">	money <span class="keyword">double</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> bank(account,money) <span class="keyword">values</span>(<span class="string">&#x27;1001&#x27;</span>,<span class="number">1000</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> bank(account,money) <span class="keyword">values</span>(<span class="string">&#x27;1002&#x27;</span>,<span class="number">1000</span>);</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> bank;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 开启自动提交 SET AUTOCOMMIT=1</span></span><br><span class="line"><span class="comment">-- 关闭自动提交 SET AUTOCOMMIT=0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 1.开启事物</span></span><br><span class="line"><span class="keyword">SET</span> AUTOCOMMIT<span class="operator">=</span><span class="number">0</span>;</span><br><span class="line"><span class="comment">-- 2.执行sql语句</span></span><br><span class="line"><span class="comment">-- 1001给1002转账100元</span></span><br><span class="line"><span class="keyword">update</span> bank <span class="keyword">set</span> money<span class="operator">=</span>money<span class="number">-100</span> <span class="keyword">where</span> account<span class="operator">=</span><span class="string">&#x27;1001&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> bank <span class="keyword">set</span> money<span class="operator">=</span>money<span class="operator">+</span><span class="number">100</span> <span class="keyword">where</span> account<span class="operator">=</span><span class="string">&#x27;1002&#x27;</span>;</span><br><span class="line"><span class="comment">-- 3.如果sql语句都执行成功,则确认(提交)</span></span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br><span class="line"><span class="comment">-- 4.如果sql语句没有全部执行成功,则撤销(回滚)</span></span><br><span class="line"><span class="keyword">ROLLBACK</span>;</span><br><span class="line"><span class="comment">-- 5.关闭事物</span></span><br><span class="line"><span class="keyword">SET</span> AUTOCOMMIT<span class="operator">=</span><span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p><font color=red>mysq中不能自动回滚需要手动判断发生错误然后手动回滚。</font></p>
+<h2 id="七、数据库三范式"><a href="#七、数据库三范式" class="headerlink" title="七、数据库三范式"></a>七、数据库三范式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">范式:前人在表设计时的经验总结</span><br><span class="line">为了建立冗余较小,结果合理的数据库,我们需要遵循数据库的范式</span><br></pre></td></tr></table></figure>
+
+<p>范式是关系数据库理论的基础，也是我们在设计数据库结构过程中所要遵循的规则和指导方法。</p>
+<p><strong>分类</strong>:1NF 2NF 3NF BCNF 4NF 5NF DKNF  6NF。</p>
+<p><strong>常用范式</strong>: 1NF、 2NF、3NF 。</p>
+<p><strong>目的</strong><br>    ●减少冗余<br>    ●减少异常(Delete， Update， Insert)<br>    ●让数据组织的更加和谐</p>
+<p>**第一范式 (1NF):**强调的是列的原子性，即列不能够再分成其他几列。</p>
+<p><img src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20210304170051.png" alt="image-20210304170051308"></p>
+<p>**第二范式(2NF) :**首先要满足1NF，另外还需要包含两部分内容:一是表必须有一个主键;二是没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分或者非主键。</p>
+<p><img src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20211022103751.png" alt="image-20211022103751723"></p>
+<p>**第三范式(3NF) :**首先要满足2NF，另外非主键列必须直接依赖于主键，不能存在传递依赖。即不能存在:非主键列A依赖于非主键列B，非主键列B依赖于主键的情况。</p>
+<p><img src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20210304084728.png" alt="image-20210304084728249"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" data-id="clvxmoo080002p4om9337coel" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/05/08/MYSQL%E5%88%9D%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/08/MYSQL%E5%88%9D%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/08/%E8%BF%99%E6%98%AF%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AAblog/">这是我的第一个blog</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
