@@ -1,453 +1,287 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Hexo</title><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.14.0-b3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>(()=>{
+      const saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+      
+      window.btf = {
+        saveToLocal: saveToLocal,
+        getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+          script.src = url
+          script.async = true
+          script.onerror = reject
+          script.onload = script.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            script.onload = script.onreadystatechange = null
+            resolve()
+          }
 
+          Object.keys(attr).forEach(key => {
+            script.setAttribute(key, attr[key])
+          })
 
+          document.head.appendChild(script)
+        }),
 
+        getCSS: (url, id = false) => new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = url
+          if (id) link.id = id
+          link.onerror = reject
+          link.onload = link.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            link.onload = link.onreadystatechange = null
+            resolve()
+          }
+          document.head.appendChild(link)
+        }),
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#FFF">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        addGlobalFn: (key, fn, name = false, parent = window) => {
+          const pjaxEnable = false
+          if (!pjaxEnable && key.startsWith('pjax')) return
 
-<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-<link rel="alternate" type="application/rss+xml" title="Hexo" href="http://example.com/rss.xml" />
-<link rel="alternate" type="application/atom+xml" title="Hexo" href="http://example.com/atom.xml" />
-<link rel="alternate" type="application/json" title="Hexo" href="http://example.com/feed.json" />
-
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-
-<link rel="stylesheet" href="/css/app.css?v=0.2.5">
-
-  
-
-<link rel="canonical" href="http://example.com/">
-
-
-
-  <title>Yume Shoka = Hexo</title>
-<meta name="generator" content="Hexo 7.2.0"></head>
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div id="loading">
-    <div class="cat">
-      <div class="body"></div>
-      <div class="head">
-        <div class="face"></div>
-      </div>
-      <div class="foot">
-        <div class="tummy-end"></div>
-        <div class="bottom"></div>
-        <div class="legs left"></div>
-        <div class="legs right"></div>
-      </div>
-      <div class="paw">
-        <div class="hands left"></div>
-        <div class="hands right"></div>
-      </div>
-    </div>
-  </div>
-  <div id="container">
-    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="inner">
-        <div id="brand">
-          <div class="pjax">
-          
-            <a href="/" class="logo" rel="start"><p class="artboard">Yume Shoka</p>
-              <h1 itemprop="name headline" class="title">Hexo</h1>
-            </a>
-          
-          </div>
-        </div>
-        <nav id="nav">
-  <div class="inner">
-    <div class="toggle">
-      <div class="lines" aria-label="Toggle navigation bar">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </div>
-    </div>
-    <ul class="menu">
-      <li class="item title"><a href="/" rel="start">Yume Shoka</a></li>
-    </ul>
-    <ul class="right">
-      <li class="item theme">
-        <i class="ic i-sun"></i>
-      </li>
-      <li class="item search">
-        <i class="ic i-search"></i>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-      </div>
-      <div id="imgs" class="pjax">
-        <ul>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeu7txpzj20zk0m81kx.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipet4bz0yj20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipewr8iypj20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipexoj0moj20zk0m8kgu.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicit4jrvuj20zk0m8785.jpg"></li>
-        </ul>
-      </div>
-    </header>
-    <div id="waves">
-      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-        <defs>
-          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-        </defs>
-        <g class="parallax">
-          <use xlink:href="#gentle-wave" x="48" y="0" />
-          <use xlink:href="#gentle-wave" x="48" y="3" />
-          <use xlink:href="#gentle-wave" x="48" y="5" />
-          <use xlink:href="#gentle-wave" x="48" y="7" />
-        </g>
-      </svg>
-    </div>
-    <main>
-      <div class="inner">
-        <div id="main" class="pjax">
-          
-  <div class="index wrap">
-    <h2 class="divider">Post List</h2>
-    <div class="segments posts">
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giclwrdwyaj20zk0m8are.jpg"></a>
-  </div>
-  <div class="info">
+          const globalFn = parent.globalFn || {}
+          const keyObj = globalFn[key] || {}
     
-<div class="meta">
-  <span class="item" title="Created: 2024-05-08 17:39:33">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2024-05-08T17:39:33+08:00">2024-05-08</time>
-  </span>
-</div>
+          if (name && keyObj[name]) return
+    
+          name = name || Object.keys(keyObj).length
+          keyObj[name] = fn
+          globalFn[key] = keyObj
+          parent.globalFn = globalFn
+        }
+      }
+    
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
 
-    <h3><a href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled">Untitled</a></h3>
-    <div class="excerpt">
-        一、表关系a.一对一
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+      
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })()</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":true,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hexo',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-05-08 20:05:32'
+}</script><meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Hexo"><span class="site-name">Hexo</span></a></span><div id="menus"><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Hexo</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-05-08T09:39:33.832Z" title="Created 2024-05-08 17:39:33">2024-05-08</time></span></div><div class="content">一、表关系a.一对一
 b.一对多(外键在学生表)
 1
 
 c.多对多
 二、DQL123数据查询语言	SELECT 	作用是把数据库表里面的数据查询出来
 
-1、基本查询12345678910111213141516171819202122232425create table employee(	id int primary key auto_increment,	name VARCHAR(100),	age int,	salary int);insert into employee values(1,&amp;#x27;赵日天&amp;#x27;,23,6000);insert into...
-    </div>
-    <a href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled" class="btn">more...</a>
-  </div>
-</article>
+1、基本查询12345678910111213141516171819202122232425create table employee(	id int primary key auto_increment,	name VARCHAR(100),	age int,	salary int);insert into employee values(1,&#x27;赵日天&#x27;,23,6000);insert into employee values(2,&#x27;李杀神&#x27;,24,4500);insert into employee values(3,&#x27;王诛魔&#x27;,20,5000);insert into employee values(4,&#x27;刘斩仙&#x27;,30,30000);insert into employee values(5,&#x27;&#x27;,29,15000);inser ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-05-08T09:39:33.830Z" title="Created 2024-05-08 17:39:33">2024-05-08</time></span></div><div class="content">一、数据库简介1、简介数据库:存储数据库的仓库数据库由一张一张的表组成 数据存储在表中
+123456789101112131415161718一、数据库简介		关系型数据库        关系-对象模型        把现实世界看作由实体和关系组成        实体的特征称为属性,我们可以使用属性来描述一个具体的实体        在关系型数据库中,使用二维表来描述实体以及实体之间的关系                数据库管理系统（DBMS）        所有数据库软件的统称    关系型数据库管理系统（RDBMS）        所有关系型数据库的统称    关系型数据库和非关系型数据库的区别       关系型数据库使用二维表来存储数据库       非关系型数控不使用二维表存储数据二、SQL	结构化查询语句,是一种用来管理关系型数据库,并与数据库中的数据进行通信的计算机语言三、SQL方言	不同的关系型数据库之间,SQL语法有差异,这个差异就是SQL方言
 
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giph4baakhj20zk0m8h5q.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2024-05-08 17:39:33">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2024-05-08T17:39:33+08:00">2024-05-08</time>
-  </span>
-</div>
+2、主流数据库介绍1234567关系型 :用于大型系统开发，海量数据存储	MySql:属于Oracle公司,免费开源,市 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-05-08T09:39:33.828Z" title="Created 2024-05-08 17:39:33">2024-05-08</time></span></div><div class="content">一、组合查询12UNION和UNION ALL的区别是,union会自动压缩多个结果集合中的重复结果，而union all则将所有的结果全部显示出来，不管是不是重复。前提条件:两张表列的数量要一致
 
-    <h3><a href="/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled">Untitled</a></h3>
-    <div class="excerpt">
-        一、数据库简介1、简介数据库:存储数据库的仓库数据库由一张一张的表组成 数据存储在表中
-123456789101112131415161718一、数据库简介		关系型数据库 关系-对象模型 把现实世界看作由实体和关系组成 实体的特征称为属性,我们可以使用属性来描述一个具体的实体 在关系型数据库中,使用二维表来描述实体以及实体之间的关系 数据库管理系统（DBMS） 所有数据库软件的统称 关系型数据库管理系统（RDBMS） 所有关系型数据库的统称 关系型数据库和非关系型数据库的区别 关系型数据库使用二维表来存储数据库...
-    </div>
-    <a href="/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled" class="btn">more...</a>
-  </div>
-</article>
+12345678910111213141516create table student1(	s_id varchar(10) primary key,	name varchar(20));insert into student1 values(&#x27;001&#x27;,&#x27;范娜&#x27;),(&#x27;002&#x27;,&#x27;张三星&#x27;),(&#x27;003&#x27;,&#x27;李四海&#x27;),(&#x27;004&#x27;,&#x27;刘德华&#x27;),(&#x27;005&#x27;,&#x27;周润发&#x27;);create table student2(	s_id varchar(10) primary key,	name varchar(20));insert into student2 values(&#x27;001&# ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/08/MYSQL%E5%88%9D%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-05-08T09:16:36.818Z" title="Created 2024-05-08 17:16:36">2024-05-08</time></span></div><div class="content">一、表约束1、表约束表约束是为了保证表结构和表数据的完整性,我们需要用到表约束
 
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2024-05-08 17:39:33">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2024-05-08T17:39:33+08:00">2024-05-08</time>
-  </span>
-</div>
 
-    <h3><a href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled">Untitled</a></h3>
-    <div class="excerpt">
-        一、组合查询12UNION和UNION ALL的区别是,union会自动压缩多个结果集合中的重复结果，而union all则将所有的结果全部显示出来，不管是不是重复。前提条件:两张表列的数量要一致
-
-12345678910111213141516create table student1(	s_id varchar(10) primary key,	name varchar(20));insert into student1...
-    </div>
-    <a href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2024/05/08/MYSQL%E5%88%9D%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2024-05-08 17:16:36">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2024-05-08T17:16:36+08:00">2024-05-08</time>
-  </span>
-</div>
-
-    <h3><a href="/2024/05/08/MYSQL%E5%88%9D%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled">Untitled</a></h3>
-    <div class="excerpt">
-        一、表约束1、表约束表约束是为了保证表结构和表数据的完整性,我们需要用到表约束
 
 名称
 关键字
 
+
+
 非空约束
 NOT NULL
+
 
 默认约束
 DEFAULT
 
+
 唯一约束
 UNIQUE KEY(UK)
+
 
 主键约束
 PRIMARY KEY(PK)
 
+
 外键约束
-FOREIGN...
-    </div>
-    <a href="/2024/05/08/MYSQL%E5%88%9D%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" title="Untitled" class="btn">more...</a>
-  </div>
-</article>
+FOREIGN KEY(FK)
 
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2024/05/08/hello-world/" itemprop="url" title="Hello World"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipexw3o58j20zk0m8e81.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2024-05-08 17:08:21">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2024-05-08T17:08:21+08:00">2024-05-08</time>
-  </span>
-</div>
 
-    <h3><a href="/2024/05/08/hello-world/" itemprop="url" title="Hello World">Hello World</a></h3>
-    <div class="excerpt">
-        Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new &amp;quot;My New Post&amp;quot;
+自动增长
+AUTO_INCREMENT
+
+
+检测约束
+check
+
+
+123456789101112131415161718192021222324#表约束	#作用:为了保证表结构和表数据的完整性,我们需要用到表约束	#1.主键约束	#用来唯一标识每一行数据	#作用:一个表只能有一个主键，主键约束确保了表中的行是唯一的	#语法:primary key	#主键的特点:不能为空,不能重复#2.自增长约束	#作用:实现主键的自增长	#语法:auto_increment#3.非空约束	#语法:not null#4.唯一性约束	#语法:unique#5.默认值约束	#语法:default#6.检查约束	#用来限定列可能的取值个数	#语法check#7.外键约束	#作用:用来限制外键只能填它关联的那 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/08/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-05-08T09:08:21.586Z" title="Created 2024-05-08 17:08:21">2024-05-08</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;
 
 More info: Writing
-Run server1$...
-    </div>
-    <a href="/2024/05/08/hello-world/" itemprop="url" title="Hello World" class="btn">more...</a>
-  </div>
-</article>
+Run server1$ hexo server
 
-    </div>
+More info: Server
+Generate static files1$ hexo generate
 
-  </div>
+More info: Generating
+Deploy to remote sites1$ hexo deploy
 
-  
+More info: Deployment
+</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">John Doe</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a><time datetime="2024-05-08T09:39:33.832Z" title="Created 2024-05-08 17:39:33">2024-05-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a><time datetime="2024-05-08T09:39:33.830Z" title="Created 2024-05-08 17:39:33">2024-05-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a><time datetime="2024-05-08T09:39:33.828Z" title="Created 2024-05-08 17:39:33">2024-05-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/08/MYSQL%E5%88%9D%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a><time datetime="2024-05-08T09:16:36.818Z" title="Created 2024-05-08 17:16:36">2024-05-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/08/hello-world/" title="Hello World">Hello World</a><time datetime="2024-05-08T09:08:21.586Z" title="Created 2024-05-08 17:08:21">2024-05-08</time></div></div></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">May 2024</span><span class="card-archive-list-count">5</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">5</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-05-08T12:05:32.831Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.14.0-b3"></script><script src="/js/main.js?v=4.14.0-b3"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = (ele) => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
 
+    Array.from(ele).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
 
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
 
-        </div>
-        <div id="sidebar">
-          
-<div class="inner">
-
-  <div class="panels">
-    <div class="inner">
-      <div class="contents panel pjax" data-title="Contents">
-      </div>
-      <div class="related panel pjax" data-title="Related">
-      </div>
-      <div class="overview panel" data-title="Overview">
-        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="image" itemprop="image" alt="John Doe"
-      data-src="/images/avatar.jpg">
-  <p class="name" itemprop="name">John Doe</p>
-  <div class="description" itemprop="description"></div>
-</div>
-
-<nav class="state">
-    <div class="item posts">
-      <a href="/archives/">
-        <span class="count">5</span>
-        <span class="name">posts</span>
-      </a>
-    </div>
-</nav>
-
-<div class="social">
-</div>
-
-<ul class="menu">
-  
-    
-  <li class="item">
-    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
-  </li>
-
-
-</ul>
-
-      </div>
-    </div>
-  </div>
-
-  <ul id="quick">
-    <li class="prev pjax">
-    </li>
-    <li class="up"><i class="ic i-arrow-up"></i></li>
-    <li class="down"><i class="ic i-arrow-down"></i></li>
-    <li class="next pjax">
-    </li>
-    <li class="percent"></li>
-  </ul>
-</div>
-
-        </div>
-        <div class="dimmer"></div>
-      </div>
-    </main>
-    <footer id="footer">
-      <div class="inner">
-        <div class="widgets">
-          
-<div class="rpost pjax">
-  <h2>Random Posts</h2>
-  <ul>
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/05/08/hello-world/" title="Hello World">Hello World</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/05/08/MYSQL%E5%88%9D%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a></span>
-  </li>
-
-  </ul>
-</div>
-<div>
-  <h2>Recent Comments</h2>
-  <ul class="leancloud-recent-comment"></ul>
-</div>
-
-        </div>
-        <div class="status">
-  <div class="copyright">
-    
-    &copy; 2010 – 
-    <span itemprop="copyrightYear">2024</span>
-    <span class="with-love">
-      <i class="ic i-sakura rotate"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">John Doe @ Yume Shoka</span>
-  </div>
-  <div class="powered-by">
-    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
-  </div>
-</div>
-
-      </div>
-    </footer>
-  </div>
-<script data-config type="text/javascript">
-  var LOCAL = {
-    path: '',
-    favicon: {
-      show: "（●´3｀●）Goooood",
-      hide: "(´Д｀)Booooom"
-    },
-    search : {
-      placeholder: "Search for Posts",
-      empty: "We didn't find any results for the search: ${query}",
-      stats: "${hits} results found in ${time} ms"
-    },
-    valine: true,fancybox: true,
-    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
-    ignores : [
-      function(uri) {
-        return uri.includes('#');
-      },
-      function(uri) {
-        return new RegExp(LOCAL.path+"$").test(uri);
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
       }
-    ]
-  };
-</script>
 
-<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
 
-<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
 
-<script src="/js/app.js?v=0.2.5"></script>
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+    
+    codeMermaidEle.forEach(ele => {
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.innerHTML = `<pre class="mermaid-src" hidden>${ele.textContent}</pre>`
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
 
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
 
-
-
-</body>
-</html>
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+  
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
