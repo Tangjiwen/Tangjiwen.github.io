@@ -1,32 +1,564 @@
-extends includes/layout.pug
 
-block content
-  #post
-    if top_img === false
-      include includes/header/post-info.pug
 
-    article#article-container.post-content!=page.content
-    include includes/post/post-copyright.pug
-    .tag_share
-      if (theme.post_meta.post.tags)
-        .post-meta__tag-list
-          each item, index in page.tags.data
-            a(href=url_for(item.path)).post-meta__tags #[=item.name]
-      include includes/third-party/share/index.pug
-        
-    if theme.reward.enable && theme.reward.QR_code
-      !=partial('includes/post/reward', {}, {cache: true})
 
-    //- ad
-    if theme.ad && theme.ad.post
-      .ads-wrap!=theme.ad.post
 
-    if theme.post_pagination
-      include includes/pagination.pug
-    if theme.related_post && theme.related_post.enable
-      != related_posts(page,site.posts)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 
-    if page.comments !== false && theme.comments && theme.comments.use
-      - var commentsJsLoad = true
-      !=partial('includes/third-party/comments/index', {}, {cache: true})
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Hexo" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Hexo" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="Hexo" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+
+<link rel="canonical" href="http://example.com/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/">
+
+
+
+  <title>
+ |
+Yume Shoka = Hexo</title>
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2024-05-08 17:39:33">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2024-05-08T17:39:33+08:00">2024-05-08</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Yume Shoka</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicitht3xtj20zk0m8k5v.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclflwv2aj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeu7txpzj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclh0m9pdj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeuibk9fj20zk0m8ay2.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="John Doe">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Hexo">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="一、数据库简介"><a href="#一、数据库简介" class="headerlink" title="一、数据库简介"></a>一、数据库简介</h2><h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><p>数据库:存储数据库的仓库<br>数据库由一张一张的表组成 数据存储在表中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">一、数据库简介	</span><br><span class="line">	关系型数据库</span><br><span class="line">        关系-对象模型</span><br><span class="line">        把现实世界看作由实体和关系组成</span><br><span class="line">        实体的特征称为属性,我们可以使用属性来描述一个具体的实体</span><br><span class="line">        在关系型数据库中,使用二维表来描述实体以及实体之间的关系</span><br><span class="line">            </span><br><span class="line">    数据库管理系统（DBMS）</span><br><span class="line">        所有数据库软件的统称</span><br><span class="line">    关系型数据库管理系统（RDBMS）</span><br><span class="line">        所有关系型数据库的统称</span><br><span class="line">    关系型数据库和非关系型数据库的区别</span><br><span class="line">       关系型数据库使用二维表来存储数据库</span><br><span class="line">       非关系型数控不使用二维表存储数据</span><br><span class="line">二、SQL</span><br><span class="line">	结构化查询语句,是一种用来管理关系型数据库,并与数据库中的数据进行通信的计算机语言</span><br><span class="line">三、SQL方言</span><br><span class="line">	不同的关系型数据库之间,SQL语法有差异,这个差异就是SQL方言</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、主流数据库介绍"><a href="#2、主流数据库介绍" class="headerlink" title="2、主流数据库介绍"></a>2、主流数据库介绍</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">关系型 :用于大型系统开发，海量数据存储</span><br><span class="line">	MySql:属于Oracle公司,免费开源,市面上使用比较多的版本是5.7和8</span><br><span class="line">	Oracle:属于Oracle公司</span><br><span class="line">	SQLServer:属于微软</span><br><span class="line">	SQLLit</span><br><span class="line">非关系型：用作服务器缓存</span><br><span class="line">	Redis MongoDB hBase</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20210227163151.png" alt="image-20210227163145723"></p>
+<h2 id="二、MYSQL数据库简介"><a href="#二、MYSQL数据库简介" class="headerlink" title="二、MYSQL数据库简介"></a>二、MYSQL数据库简介</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MySQL是一个关系型数据库管理系统，关系数据库将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，提高速度和灵活性</span><br><span class="line">MySQL是最好的、最流行的RDBMS(Relationa Database Management System，关系型数据库管理系统)之一</span><br><span class="line">MySQL体积小、速度快、成本低、代码开源，一般中小型网站的开发都选择 MySQL 作为网站数据库</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="三、数据库的安装"><a href="#三、数据库的安装" class="headerlink" title="三、数据库的安装"></a>三、数据库的安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">下载MySQL软件（版本：5.5、5.6、5.7、8.0）</span><br><span class="line">本地地址Q:\_04网络共享资料（新）\固定使用\技术部资料\软件资料\software\mysql</span><br><span class="line"></span><br><span class="line">配置初始化的my.ini文件</span><br><span class="line">初始化MySQL</span><br><span class="line">安装MySQL服务和启动MySQL服务</span><br><span class="line">连接MySQL和修改密码</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">可视化图形界面的安装</span><br><span class="line">Navicat是一套快速、可靠并价格相宜的数据库管理工具，专为简化数据库的管理及降低系统管理成本而设。</span><br><span class="line">Navicat是以直觉化的图形用户界面而建的，可以以安全、简单的方式创建、组织、访问并共用信息</span><br><span class="line">推荐使用Navicat Premium 64位，免安装破解版</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="四、SQL语句分类"><a href="#四、SQL语句分类" class="headerlink" title="四、SQL语句分类"></a>四、SQL语句分类</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DDL(数据定义语言):数据库结构和表结构的增删改查</span><br><span class="line">DML(数据操作语言):表数据的增删改	(*)</span><br><span class="line">DQL(数据查询语言):表数据的查询	 (**)</span><br><span class="line">DCL(数据控制语言):数据库的权限控制</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、DDL"><a href="#五、DDL" class="headerlink" title="五、DDL"></a>五、DDL</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">数据库结构和表结构的增删改查</span><br><span class="line"></span><br><span class="line">DDL对应的关键字如下</span><br><span class="line">	create</span><br><span class="line">	drop</span><br><span class="line">	alter</span><br><span class="line">	show</span><br></pre></td></tr></table></figure>
+
+<h3 id="1、命令行操作数据库"><a href="#1、命令行操作数据库" class="headerlink" title="1、命令行操作数据库"></a>1、命令行操作数据库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sql语句写完后以;结尾</span><br><span class="line"></span><br><span class="line">1.查看数据库服务器中所有的数据库</span><br><span class="line">show databases;</span><br><span class="line">2.创建数据库</span><br><span class="line">create database 数据库名称;</span><br><span class="line">3.删除数据库</span><br><span class="line">drop database 数据库名称;</span><br><span class="line">4.使用数据库</span><br><span class="line">use 数据库名称;</span><br><span class="line">5.查看数据库中的表</span><br><span class="line">show tables;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、客户端连接mysql服务器"><a href="#2、客户端连接mysql服务器" class="headerlink" title="2、客户端连接mysql服务器"></a>2、客户端连接mysql服务器</h3><p>Navicat</p>
+<p>Sqlyog</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql数据库默认的端口是3306</span><br><span class="line">	      默认账号   root</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL语言</span><br><span class="line">	不区分大小写</span><br><span class="line">	关键字建议大写</span><br></pre></td></tr></table></figure>
+
+<p>新建数据库</p>
+<p>create datebase [数据库名]</p>
+<p><img data-src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20210910141006.png" alt="image-20210910141000529"></p>
+<p>删除数据库</p>
+<p>drop datebase [数据库名]<br><img data-src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20210910141208.png" alt="image-20210910141208758"></p>
+<p>修改数据库</p>
+<pre><code>略
+</code></pre>
+<p>查看数据库</p>
+<pre><code>肉眼看
+</code></pre>
+<h3 id="3-表"><a href="#3-表" class="headerlink" title="3.表"></a>3.表</h3><p><img data-src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220111164619121.png" alt="image-20220111164619121"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 1.建表</span></span><br><span class="line">	<span class="comment">-- 语法: create table 表名(列名 数据类型,列名 数据类型);</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> student(</span><br><span class="line">	id <span class="type">int</span>,</span><br><span class="line">	name <span class="type">varchar</span>(<span class="number">10</span>),</span><br><span class="line">	age <span class="type">int</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 2.删表</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> student;</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、DML"><a href="#六、DML" class="headerlink" title="六、DML"></a>六、DML</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">作用:实现表数据的增删改</span><br><span class="line">	<span class="keyword">insert</span></span><br><span class="line">	<span class="keyword">delete</span></span><br><span class="line">	<span class="keyword">update</span></span><br><span class="line">	</span><br><span class="line">#在MySql数据库中,字符串可以使用单引号或双引号表示</span><br></pre></td></tr></table></figure>
+
+<h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> student(</span><br><span class="line">	id <span class="type">int</span>,</span><br><span class="line">	name <span class="type">varchar</span>(<span class="number">10</span>),</span><br><span class="line">	age <span class="type">int</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-增"><a href="#1-增" class="headerlink" title="1.增"></a>1.增</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 数据中没有字符,单引号和双引号都表示字符串</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 增 </span></span><br><span class="line">	<span class="comment">-- 向表中的所有列新增数据</span></span><br><span class="line">	<span class="keyword">insert</span> <span class="keyword">into</span> student <span class="keyword">values</span>(<span class="number">2</span>,<span class="string">&#x27;王诛魔&#x27;</span>,<span class="number">200</span>);</span><br><span class="line">	<span class="comment">-- 给指定的列插入数据</span></span><br><span class="line">	<span class="keyword">insert</span> <span class="keyword">into</span> student(name,age) <span class="keyword">values</span>(<span class="string">&#x27;李杀神&#x27;</span>,<span class="number">300</span>);</span><br><span class="line">	<span class="comment">-- 使用一条sql语句向表里面添加多行数据</span></span><br><span class="line">	<span class="keyword">insert</span> <span class="keyword">into</span> student <span class="keyword">values</span>(<span class="number">4</span>,<span class="string">&#x27;刘斩仙&#x27;</span>,<span class="number">400</span>),(<span class="number">5</span>,<span class="string">&#x27;aaa&#x27;</span>,<span class="number">600</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-删"><a href="#2-删" class="headerlink" title="2.删"></a>2.删</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 删</span></span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 表名 <span class="keyword">where</span> 条件</span><br><span class="line">	<span class="comment">-- 删除id为1的行</span></span><br><span class="line">	<span class="keyword">delete</span> <span class="keyword">from</span> student <span class="keyword">where</span> id<span class="operator">=</span><span class="number">1</span>;</span><br><span class="line">	<span class="comment">-- 删除name为刘斩仙的行</span></span><br><span class="line">	<span class="keyword">delete</span> <span class="keyword">from</span> student <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;刘斩仙&#x27;</span>;</span><br><span class="line">	<span class="comment">-- 多条件删除(删除name为刘斩仙并且age为100的行数据)</span></span><br><span class="line">	<span class="keyword">delete</span> <span class="keyword">from</span> student <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;刘斩仙&#x27;</span> <span class="keyword">and</span> age<span class="operator">=</span><span class="number">100</span>;</span><br><span class="line">	<span class="comment">-- 删除name为王诛魔或者name为李杀神的行</span></span><br><span class="line">	<span class="keyword">delete</span> <span class="keyword">from</span> student <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;王诛魔&#x27;</span> <span class="keyword">or</span> name<span class="operator">=</span><span class="string">&#x27;李杀神&#x27;</span>;</span><br><span class="line">	<span class="comment">-- 清空表数据</span></span><br><span class="line">	<span class="keyword">delete</span> <span class="keyword">from</span> student;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-改"><a href="#3-改" class="headerlink" title="3.改"></a>3.改</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> 表名 <span class="keyword">set</span> 列名<span class="operator">=</span>新值  <span class="keyword">where</span> 条件</span><br><span class="line"><span class="comment">-- 改</span></span><br><span class="line">	<span class="comment">-- 修改赵日天的年龄为200</span></span><br><span class="line">	<span class="keyword">update</span> student <span class="keyword">set</span> age<span class="operator">=</span><span class="number">200</span> <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;赵日天&#x27;</span>;</span><br><span class="line">	<span class="comment">-- 把刘斩仙的年龄在以前的基础上加20	</span></span><br><span class="line">	<span class="keyword">update</span> student <span class="keyword">set</span> age<span class="operator">=</span>age<span class="operator">+</span><span class="number">20</span> <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;刘斩仙&#x27;</span> <span class="keyword">and</span> id<span class="operator">=</span><span class="number">7</span>;</span><br><span class="line">	<span class="comment">-- 修改id为4的name为赵日地,age为50</span></span><br><span class="line">	<span class="keyword">update</span> student <span class="keyword">set</span> name<span class="operator">=</span><span class="string">&#x27;赵日地&#x27;</span>,age<span class="operator">=</span><span class="number">50</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="七、MYSQL数据类型"><a href="#七、MYSQL数据类型" class="headerlink" title="七、MYSQL数据类型"></a>七、MYSQL数据类型</h2><p>整数类型</p>
+<p>浮点数类型</p>
+<p>字符串类型</p>
+<p>日期类型</p>
+<p>其他数据类型</p>
+<h3 id="1、数值类"><a href="#1、数值类" class="headerlink" title="1、数值类"></a>1、数值类</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int(m)</td>
+<td>整数 4个字节 范围(-2147483648~2147483647)</td>
+</tr>
+<tr>
+<td>bigint(m)</td>
+<td>整数 8个字节 范围(+-9.22*10的18次方)</td>
+</tr>
+<tr>
+<td>float(m,d)</td>
+<td>单精度浮点数8位精度  m总个数，d小数位</td>
+</tr>
+<tr>
+<td>double(m,d)</td>
+<td>双精度浮点数16位精度  m总个数，d小数位</td>
+</tr>
+<tr>
+<td>decimal(m,d)</td>
+<td>定点数  参数m&lt;65 是总个数，d&lt;30且 d&lt;m 是小数位</td>
+</tr>
+</tbody></table>
+<p><font color=red>浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值。 </font></p>
+<h3 id="2、字符串类型"><a href="#2、字符串类型" class="headerlink" title="2、字符串类型"></a>2、字符串类型</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>char(n)</td>
+<td>固定长度，最多255个字符</td>
+</tr>
+<tr>
+<td>varchar(n)</td>
+<td>可变长度，最多65535个字符</td>
+</tr>
+<tr>
+<td>tinytext</td>
+<td>单可变长度，最多255个字符</td>
+</tr>
+<tr>
+<td>text</td>
+<td>可变长度，最多65535个字符</td>
+</tr>
+<tr>
+<td>mediumtext</td>
+<td>可变长度，最多2的24次方-1个字符</td>
+</tr>
+<tr>
+<td>longtext</td>
+<td>可变长度，最多2的32次方-1个字符</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">char 和 varchar：</span><br><span class="line">	1.char(n)和varchar(n)中的n用来限制这一列能够插入的字符串的最大长度为n.</span><br><span class="line">	1.char(n) 若存入字符数小于n，则以空格补于其后，查询之时再将空格去掉。所以 char 类型存储的字符串末尾不能有空格，varchar 不限于此。</span><br><span class="line">	2.char(n) 固定长度，char(4) 不管是存入几个字符，都将占用 4 个字符，varchar 是存入的实际字符数 +1 个字节（n&lt;=255）或2个字节(n&gt;255)，所以 varchar(4),存入 3 个字符将占用 4 个字节。</span><br><span class="line"></span><br><span class="line">MySQL 5.0 以上的版本：</span><br><span class="line">	一个汉字占多少长度与编码有关：</span><br><span class="line">UTF－8：一个汉字＝3个字节</span><br><span class="line">GBK：一个汉字＝2个字节</span><br><span class="line">varchar(n) 表示 n 个字符，无论汉字和英文，Mysql 都能存入 n 个字符，仅是实际字节长度有所区别</span><br></pre></td></tr></table></figure>
+
+<p>MySQL 检查长度，可用 SQL 语言来查看：</p>
+<p><img data-src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/chenyun/20210227163246.png" alt="image-20210227163246496"></p>
+<h3 id="3、日期时间类型"><a href="#3、日期时间类型" class="headerlink" title="3、日期时间类型"></a>3、日期时间类型</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>date</td>
+<td>日期 ‘2008-12-2’</td>
+</tr>
+<tr>
+<td>time</td>
+<td>时间 ‘12:25:36’</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>日期时间 ‘2008-12-2 22:06:44’</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>自动存储记录修改时间</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">若定义一个字段为timestamp，这个字段里的时间数据会随其他字段修改的时候自动刷新，所以这个数据类型的字段可以存放这条记录最后被修改的时间。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> student(</span><br><span class="line">	s_id <span class="type">int</span>,</span><br><span class="line">	s_name <span class="type">varchar</span>(<span class="number">10</span>),</span><br><span class="line">	gender <span class="type">varchar</span>(<span class="number">10</span>),</span><br><span class="line">	age <span class="type">int</span>,</span><br><span class="line">	height <span class="keyword">double</span>,</span><br><span class="line">	weight <span class="keyword">double</span>,</span><br><span class="line">	birthday <span class="type">date</span>,</span><br><span class="line">	id_card <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">	createtime datetime,</span><br><span class="line">	updatetime <span class="type">TIMESTAMP</span> <span class="comment">-- 时间戳,当我们对表的数据进行修改时,它会自动刷新</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student <span class="keyword">values</span>(<span class="number">1</span>,<span class="string">&#x27;赵昊&#x27;</span>,<span class="string">&#x27;男&#x27;</span>,<span class="number">20</span>,<span class="number">180.5</span>,<span class="number">62.5</span>,<span class="string">&#x27;2020/10/01&#x27;</span>,<span class="string">&#x27;111&#x27;</span>,SYSDATE(),SYSDATE());</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student <span class="keyword">values</span>(<span class="number">2</span>,<span class="string">&#x27;铁锤&#x27;</span>,<span class="string">&#x27;女&#x27;</span>,<span class="number">21</span>,<span class="number">175.3</span>,<span class="number">63.5</span>,<span class="string">&#x27;2020/10/02&#x27;</span>,<span class="string">&#x27;111&#x27;</span>,SYSDATE(),SYSDATE());</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student <span class="keyword">values</span>(<span class="number">3</span>,<span class="string">&#x27;山炮&#x27;</span>,<span class="string">&#x27;女&#x27;</span>,<span class="number">22</span>,<span class="number">170.5</span>,<span class="number">64.5</span>,<span class="string">&#x27;2020/10/03&#x27;</span>,<span class="string">&#x27;111&#x27;</span>,SYSDATE(),SYSDATE());</span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> student <span class="keyword">set</span> id_card<span class="operator">=</span><span class="string">&#x27;123&#x27;</span> <span class="keyword">where</span> s_name<span class="operator">=</span><span class="string">&#x27;赵昊&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">时间戳</span><br><span class="line">存储数据的最后修改时间,数据类型用时间戳,当我们对表数据进行修改时,这一列的时间会自动刷新</span><br></pre></td></tr></table></figure>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2024-03-20 13:48:51" itemprop="dateModified" datetime="2024-03-20T13:48:51+08:00">2024-03-20</time>
+  </span>
+</div>
+
       
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="John Doe WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="John Doe Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="John Doe PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>John Doe <i class="ic i-at"><em>@</em></i>Hexo
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/" title="">http://example.com/2024/05/08/MYSQL基础入门文档/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevo9j1jj20zk0m8e81.jpg" title="Untitled">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Untitled</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipet4bz0yj20zk0m8e81.jpg" title="Untitled">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Untitled</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、数据库简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1、简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">2、主流数据库介绍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81MYSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">二、MYSQL数据库简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">三、数据库的安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81SQL%E8%AF%AD%E5%8F%A5%E5%88%86%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">四、SQL语句分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81DDL"><span class="toc-number">5.</span> <span class="toc-text">五、DDL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">5.1.</span> <span class="toc-text">1、命令行操作数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5mysql%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">5.2.</span> <span class="toc-text">2、客户端连接mysql服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A1%A8"><span class="toc-number">5.3.</span> <span class="toc-text">3.表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81DML"><span class="toc-number">6.</span> <span class="toc-text">六、DML</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8"><span class="toc-number">6.1.</span> <span class="toc-text">表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A2%9E"><span class="toc-number">6.2.</span> <span class="toc-text">1.增</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%A0"><span class="toc-number">6.3.</span> <span class="toc-text">2.删</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%94%B9"><span class="toc-number">6.4.</span> <span class="toc-text">3.改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81MYSQL%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">7.</span> <span class="toc-text">七、MYSQL数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E6%95%B0%E5%80%BC%E7%B1%BB"><span class="toc-number">7.1.</span> <span class="toc-text">1、数值类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="toc-number">7.2.</span> <span class="toc-text">2、字符串类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="toc-number">7.3.</span> <span class="toc-text">3、日期时间类型</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="John Doe"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">John Doe</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">5</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/08/MYSQL%E5%88%9D%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/08/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/08/MYSQL%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/08/MYSQL%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/05/08/MYSQL%E4%B8%AD%E7%BA%A7%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3/" title="Untitled">Untitled</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe @ Yume Shoka</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2024/05/08/MYSQL基础入门文档/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
