@@ -111,7 +111,7 @@ a:hover {
   color: #ff5724;
 }
 .md-text p:not([class]) {
-  text-align: left;
+  text-align: right;
 }
 hr {
   color: var(--text-meta);
@@ -5736,7 +5736,7 @@ details.toc[open] >div.body section .header+.doc_tree {
   object-fit: cover;
   width: 100%;
   border-radius: 0;
-  aspect-ratio: 2.4;
+  aspect-ratio: 1.4;
 }
 .post-list .post-card.post.photo .cover {
   position: relative;
@@ -5745,7 +5745,7 @@ details.toc[open] >div.body section .header+.doc_tree {
 .post-list .post-card.post.photo .cover img {
   width: 100%;
   object-fit: cover;
-  aspect-ratio: 2.4;
+  aspect-ratio: 1.4;
 }
 .post-list .post-card.post.photo .cover .cover-info {
   padding: 1.5rem 1rem;
@@ -5950,7 +5950,7 @@ body>.sitebg .siteblur:hover {
 .l_body[text-indent] .md-text.content li p:not([class]),
 .l_body[text-indent] .md-text.content .article-footer p:not([class]) {
   text-indent: 0;
-  text-align: left;
+  text-align: right;
 }
 .md-text ul:not(:last-child),
 .md-text ol:not(:last-child) {
